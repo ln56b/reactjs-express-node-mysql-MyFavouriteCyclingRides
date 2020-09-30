@@ -6,3 +6,9 @@
 	padding: 1rem;
 	text-align: center;
 }
+
+.rides-gallery {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
