@@ -1,29 +1,8 @@
 .cycling-rides {
-	border: 1px solid black;
 	font-family: 'Architects Daughter', cursive;
 }
 
 .header {
-	border: 1px solid black;
-	margin: 1rem 0;
-}
-
-.news-carousel {
-	border: 1px solid black;
-	margin: 1rem 0;
-}
-
-.rides-gallery {
-	border: 1px solid black;
-	margin: 1rem 0;
-}
-
-.ride-card {
-	border: 1px solid black;
-	margin: 1rem 0;
-}
-
-.ride-form {
-	border: 1px solid black;
-	margin: 1rem 0;
+	padding: 1rem;
+	text-align: center;
 }
