@@ -1,8 +1,13 @@
 import React from 'react';
 import './App.css';
+import CyclingRides from './components/CyclingRides';
 
 function App() {
-	return <div className="App">Hello </div>;
+	return (
+		<div>
+			<CyclingRides />
+		</div>
+	);
 }
 
 export default App;

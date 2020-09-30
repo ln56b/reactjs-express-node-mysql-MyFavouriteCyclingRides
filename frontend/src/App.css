@@ -1,38 +1,29 @@
-.App {
-  text-align: center;
+.cycling-rides {
+	border: 1px solid black;
+	font-family: 'Architects Daughter', cursive;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.header {
+	border: 1px solid black;
+	margin: 1rem 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.news-carousel {
+	border: 1px solid black;
+	margin: 1rem 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.rides-gallery {
+	border: 1px solid black;
+	margin: 1rem 0;
 }
 
-.App-link {
-  color: #61dafb;
+.ride-card {
+	border: 1px solid black;
+	margin: 1rem 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ride-form {
+	border: 1px solid black;
+	margin: 1rem 0;
 }
