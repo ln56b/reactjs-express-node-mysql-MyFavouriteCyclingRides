@@ -5,6 +5,7 @@ import MyProfile from './MyProfile';
 import ResponsiveDrawer from './ResponsiveDrawer';
 import RideForm from './RideForm';
 import RidesGallery from './RidesGallery';
+import NewsCarousel from './NewsCarousel';
 
 const THEME = createMuiTheme({
 	typography: {
@@ -17,6 +18,7 @@ function CyclingRides() {
 	return (
 		<div className="cycling-rides">
 			<MuiThemeProvider theme={THEME}>
+				<NewsCarousel />
 				<RidesGallery />
 				<RideForm />
 				<MyProfile />

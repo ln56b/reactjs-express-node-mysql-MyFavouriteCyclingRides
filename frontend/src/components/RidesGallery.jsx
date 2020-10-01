@@ -95,8 +95,8 @@ const RIDES = [
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		maxWidth: 345,
-		margin: 5,
+		maxWidth: 500,
+		margin: 25,
 	},
 	media: {
 		height: 300,
