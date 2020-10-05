@@ -9,10 +9,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import ventoux from '../assets/ventoux.jpg';
-import galibier from '../assets/galibier.jpg';
-import aspin from '../assets/aspin.jpg';
-
 const useStyles = makeStyles((theme) => ({
 	root: {
 		maxWidth: 500,
