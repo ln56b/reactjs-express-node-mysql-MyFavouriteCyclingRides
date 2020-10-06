@@ -8,8 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AddIcon from '@material-ui/icons/Add';
-import { Fab, Button } from '@material-ui/core';
-import { useForm, Controller } from 'react-hook-form';
+import { Button } from '@material-ui/core';
+import { useForm } from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.primary.main,
 	},
 	form: {
-		width: '100%', // Fix IE 11 issue.
+		width: '100%',
 		marginTop: theme.spacing(1),
 	},
 	submit: {
@@ -33,7 +33,16 @@ const useStyles = makeStyles((theme) => ({
 
 function RideForm() {
 	const classes = useStyles();
-	const { handleSubmit } = useForm();
+	const { register, handleSubmit } = useForm();
+
+	const onSubmit = (data) => {
+		alert(JSON.stringify(data));
+	};
+
+	const handleUploadClick = (e) => {
+		let file = e.target.file;
+		alert(file);
+	};
 
 	return (
 		<Container component="main" maxWidth="xs">
@@ -47,38 +56,54 @@ function RideForm() {
 				</Typography>
 				<form
 					className={classes.form}
-					onSubmit={handleSubmit}
+					onSubmit={handleSubmit(onSubmit)}
 					noValidate
 					autoComplete="off"
 				>
 					<TextField
 						id="name"
+						name="name"
+						variant="outlined"
+						inputRef={register}
 						margin="normal"
 						fullWidth
-						label="Name"
+						label="name"
 						required
+						autoFocus
 					/>
-					<TextField id="mountain" margin="normal" fullWidth label="mountain" />
+					<TextField
+						id="mountain"
+						name="mountain"
+						variant="outlined"
+						inputRef={register}
+						margin="normal"
+						fullWidth
+						label="mountain"
+					/>
+					<input
+						accept="image/*"
+						style={{ display: 'none' }}
+						id="upload-picture"
+						name="upload-picture"
+						ref={register}
+						type="file"
+						onChange={handleUploadClick}
+					/>
 					<label htmlFor="upload-picture">
-						<input
-							style={{ display: 'none' }}
-							id="upload-picture"
-							name="upload-picture"
-							type="file"
-							required
-						/>
-						<Fab
-							color="secondary"
-							size="small"
+						<Button
 							component="span"
+							color="secondary"
+							variant="contained"
 							aria-label="add"
-							variant="extended"
 						>
 							<AddIcon /> Add picture
-						</Fab>
+						</Button>
 					</label>
 					<TextField
 						id="distance"
+						name="distance"
+						variant="outlined"
+						inputRef={register}
 						margin="normal"
 						fullWidth
 						label="distance"
@@ -88,6 +113,9 @@ function RideForm() {
 					/>
 					<TextField
 						id="elevation"
+						name="elevation"
+						variant="outlined"
+						inputRef={register}
 						margin="normal"
 						fullWidth
 						label="elevation"
@@ -97,6 +125,9 @@ function RideForm() {
 					/>
 					<TextField
 						id="averageSlope"
+						name="averageSlope"
+						variant="outlined"
+						inputRef={register}
 						margin="normal"
 						fullWidth
 						label="averageSlope"
