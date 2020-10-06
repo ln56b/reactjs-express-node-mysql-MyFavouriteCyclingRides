@@ -1,22 +1,17 @@
 const express = require('express');
 
 const bodyParser = require('body-parser');
-const db = require('../conf');
 
 const router = express.Router({ mergeParams: true });
+const multer = require('../middleware/multer-config');
+const fs = require('fs');
+
+const ridesControl = require('../controllers/rides');
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-router.get('/', (req, res, next) => {
-	db.query('SELECT * FROM rides', (err, results) => {
-		console.log(err);
-		if (err) {
-			res.status(500).send('Error getting this ride');
-		} else {
-			res.json(results);
-		}
-	});
-});
+router.post('/', ridesControl.createRide);
+router.get('/', ridesControl.getAllRides);
 
 module.exports = router;
