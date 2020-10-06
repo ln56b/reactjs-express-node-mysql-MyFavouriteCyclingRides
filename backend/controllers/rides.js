@@ -14,7 +14,12 @@ exports.createRide = (req, res) => {
 		maxSlope: req.body.maxSlope,
 	};
 
-	Ride.create(ride)
+	const rideWithPic = new Ride({
+		...ride,
+		picture: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+	});
+
+	Ride.create(rideWithPic)
 		.then((data) => {
 			res.status(201).send(data);
 		})
