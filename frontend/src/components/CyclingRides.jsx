@@ -6,6 +6,7 @@ import ResponsiveDrawer from './ResponsiveDrawer';
 import RideForm from './RideForm';
 import RidesGallery from './RidesGallery';
 import NewsCarousel from './NewsCarousel';
+import SignIn from './Signin';
 
 const THEME = createMuiTheme({
 	typography: {
@@ -22,6 +23,7 @@ function CyclingRides() {
 				<RidesGallery />
 				<RideForm />
 				<MyProfile />
+				<SignIn />
 				<ResponsiveDrawer />
 			</MuiThemeProvider>
 		</div>

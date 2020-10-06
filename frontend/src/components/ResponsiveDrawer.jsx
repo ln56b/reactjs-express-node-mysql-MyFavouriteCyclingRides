@@ -47,7 +47,13 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 function ResponsiveDrawer() {
-	const dummyCategories = ['Home', 'Gallery', 'Form', 'Profile'];
+	const dummyCategories = [
+		'Home',
+		'Gallery',
+		'Add a ride',
+		'Signin',
+		'Profile',
+	];
 	const classes = useStyles();
 	const theme = useTheme();
 	const [mobileOpen, setMobileOpen] = React.useState(false);
