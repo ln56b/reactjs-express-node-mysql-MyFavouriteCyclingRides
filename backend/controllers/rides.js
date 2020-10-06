@@ -1,4 +1,5 @@
-const db = require('../conf');
+const db = require('../models');
+const Ride = db.rides;
 
 exports.createRide = (req, res, next) => {
 	const formData = req.body;
@@ -13,12 +14,8 @@ exports.createRide = (req, res, next) => {
 	});
 };
 
-exports.getAllRides = (req, res, next) => {
-	db.query('SELECT * FROM rides', (err, results) => {
-		if (err) {
-			res.status(500).send('Error getting this ride');
-		} else {
-			res.json(results);
-		}
-	});
+exports.getAllRides = (req, res) => {
+	Ride.findAll()
+		.then((rides) => res.status(200).send(rides))
+		.catch((err) => res.status(400).json({ err }));
 };
