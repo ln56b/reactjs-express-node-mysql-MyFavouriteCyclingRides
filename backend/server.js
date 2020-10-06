@@ -6,6 +6,9 @@ const port = 5000;
 
 app.use('/api', api);
 
+const db = require('./models');
+db.sequelize.sync();
+
 app.listen(port, (err) => {
 	if (err) {
 		throw new Error('Impossible connection to the port');
