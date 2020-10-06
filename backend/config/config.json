@@ -4,23 +4,20 @@
 		"password": null,
 		"database": "cycling_rides",
 		"host": "localhost",
-		"dialect": "mysql",
-		"operatorsAliases": false
+		"dialect": "mysql"
 	},
 	"test": {
 		"username": "root",
 		"password": null,
 		"database": "cycling_rides",
 		"host": "localhost",
-		"dialect": "mysql",
-		"operatorsAliases": false
+		"dialect": "mysql"
 	},
 	"production": {
 		"username": "root",
 		"password": null,
 		"database": "cycling_rides",
 		"host": "localhost",
-		"dialect": "mysql",
-		"operatorsAliases": false
+		"dialect": "mysql"
 	}
 }
