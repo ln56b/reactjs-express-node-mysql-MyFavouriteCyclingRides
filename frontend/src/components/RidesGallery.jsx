@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 function RidesGallery() {
 	const classes = useStyles();
 	const [rides, setRides] = useState([]);
-	const [error, setError] = useState('');
+	const [, setError] = useState('');
 
 	useEffect(() => {
 		axios

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 import { makeStyles } from '@material-ui/core/styles';
@@ -33,15 +34,24 @@ const useStyles = makeStyles((theme) => ({
 
 function RideForm() {
 	const classes = useStyles();
+	const [name, setName] = useState('');
+	const [mountain, setMountain] = useState('');
+	const [picture, setPicture] = useState('');
+	const [distance, setDistance] = useState(0);
+	const [elevation, setElevation] = useState(0);
+	const [averageSlope, setAverageSlope] = useState(0);
+
 	const { register, handleSubmit } = useForm();
 
-	const onSubmit = (data) => {
-		alert(JSON.stringify(data));
-	};
+	const upload = (e) => {
+		const data = new FormData();
+		data.append('name', name);
+		data.append('file', picture);
 
-	const handleUploadClick = (e) => {
-		let file = e.target.file;
-		alert(file);
+		axios
+			.post('https://httpbin.org//anything', data)
+			.then((res) => console.log(res))
+			.catch((err) => console.log(err));
 	};
 
 	return (
@@ -56,38 +66,43 @@ function RideForm() {
 				</Typography>
 				<form
 					className={classes.form}
-					onSubmit={handleSubmit(onSubmit)}
+					onSubmit={handleSubmit}
 					noValidate
 					autoComplete="off"
 				>
 					<TextField
 						id="name"
 						name="name"
-						variant="outlined"
 						inputRef={register}
-						margin="normal"
-						fullWidth
+						onChange={(e) => setName(e.target.value)}
 						label="name"
 						required
 						autoFocus
+						variant="outlined"
+						margin="normal"
+						fullWidth
 					/>
 					<TextField
 						id="mountain"
 						name="mountain"
-						variant="outlined"
 						inputRef={register}
+						onChange={(e) => setMountain(e.target.value)}
+						label="mountain"
+						variant="outlined"
 						margin="normal"
 						fullWidth
-						label="mountain"
 					/>
 					<input
-						accept="image/*"
-						style={{ display: 'none' }}
 						id="upload-picture"
 						name="upload-picture"
+						onChange={(e) => {
+							const file = e.target.files[0];
+							setPicture(file);
+						}}
 						ref={register}
 						type="file"
-						onChange={handleUploadClick}
+						accept="image/*"
+						style={{ display: 'none' }}
 					/>
 					<label htmlFor="upload-picture">
 						<Button
@@ -95,6 +110,7 @@ function RideForm() {
 							color="secondary"
 							variant="contained"
 							aria-label="add"
+							onClick={upload}
 						>
 							<AddIcon /> Add picture
 						</Button>
@@ -102,11 +118,12 @@ function RideForm() {
 					<TextField
 						id="distance"
 						name="distance"
-						variant="outlined"
+						onChange={(e) => setDistance(e.target.value)}
 						inputRef={register}
+						label="distance"
+						variant="outlined"
 						margin="normal"
 						fullWidth
-						label="distance"
 						InputProps={{
 							endAdornment: <InputAdornment position="end">Km</InputAdornment>,
 						}}
@@ -114,11 +131,12 @@ function RideForm() {
 					<TextField
 						id="elevation"
 						name="elevation"
-						variant="outlined"
+						onChange={(e) => setElevation(e.target.value)}
 						inputRef={register}
+						label="elevation"
+						variant="outlined"
 						margin="normal"
 						fullWidth
-						label="elevation"
 						InputProps={{
 							endAdornment: <InputAdornment position="end">m</InputAdornment>,
 						}}
@@ -126,11 +144,12 @@ function RideForm() {
 					<TextField
 						id="averageSlope"
 						name="averageSlope"
-						variant="outlined"
+						onChange={(e) => setAverageSlope(e.target.value)}
 						inputRef={register}
+						label="averageSlope"
+						variant="outlined"
 						margin="normal"
 						fullWidth
-						label="averageSlope"
 						InputProps={{
 							endAdornment: <InputAdornment position="end">%</InputAdornment>,
 						}}
