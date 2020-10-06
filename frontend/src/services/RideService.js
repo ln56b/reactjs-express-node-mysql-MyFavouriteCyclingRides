@@ -1,21 +1,29 @@
 import http from '../http-common';
 
-exports.create = (data) => {
+const create = (data) => {
 	return http.post('/rides', data);
 };
 
-exports.findAll = () => {
+const findAll = () => {
 	return http.get('/rides');
 };
 
-exports.findOne = (id) => {
+const findOne = (id) => {
 	return http.get(`/rides/${id}`);
 };
 
-exports.update = (id, data) => {
+const update = (id, data) => {
 	return http.put(`/rides/${id}`, data);
 };
 
-exports.delete = (id) => {
+const remove = (id) => {
 	return http.delete(`rides/${id}`);
+};
+
+export default {
+	create,
+	findAll,
+	findOne,
+	update,
+	remove,
 };

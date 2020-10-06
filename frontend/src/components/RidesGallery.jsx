@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import RideService from '../services/RideService';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -27,15 +27,14 @@ function RidesGallery() {
 	const [, setError] = useState('');
 
 	useEffect(() => {
-		axios
-			.get('/api/rides')
-			.then((res) => {
-				setRides(res.data);
-			})
-			.catch((err) => {
-				setError(err.message);
-			});
+		getRides();
 	}, []);
+
+	const getRides = () => {
+		RideService.findAll()
+			.then((res) => setRides(res.data))
+			.catch((err) => setError(err.message));
+	};
 
 	return (
 		<div className="rides-gallery">
