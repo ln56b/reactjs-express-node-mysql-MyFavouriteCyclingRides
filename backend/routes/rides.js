@@ -11,7 +11,6 @@ const ridesControl = require('../controllers/rides');
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-// router.post('/', ridesControl.createRide);
 router.post('/', multer, ridesControl.createRide);
 router.get('/', ridesControl.getAllRides);
 router.get('/:id', ridesControl.getOneRide);

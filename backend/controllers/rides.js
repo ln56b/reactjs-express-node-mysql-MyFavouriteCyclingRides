@@ -20,8 +20,8 @@ exports.createRide = (req, res) => {
 	});
 
 	Ride.create(rideWithPic)
-		.then((data) => {
-			res.status(201).send(data);
+		.then(() => {
+			res.status(201).json({ message: 'The ride has been created.' });
 		})
 		.catch((err) => {
 			res.status(500).json({ err });
