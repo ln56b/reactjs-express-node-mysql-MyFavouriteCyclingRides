@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import RideService from '../services/RideService';
+import UploadService from '../services/UploadPictureService';
+
 import Avatar from '@material-ui/core/Avatar';
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,7 +12,6 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AddIcon from '@material-ui/icons/Add';
 import { Button } from '@material-ui/core';
-import { useForm } from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -34,23 +35,72 @@ const useStyles = makeStyles((theme) => ({
 
 function RideForm() {
 	const classes = useStyles();
-	const [name, setName] = useState('');
-	const [mountain, setMountain] = useState('');
-	const [picture, setPicture] = useState('');
-	const [distance, setDistance] = useState(0);
-	const [elevation, setElevation] = useState(0);
-	const [averageSlope, setAverageSlope] = useState(0);
 
-	const { register, handleSubmit } = useForm();
+	const initialRideState = {
+		id: '',
+		name: '',
+		picture: '',
+		startLocation: '',
+		altitude: undefined,
+		mountain: '',
+		kilometers: undefined,
+		elevation: undefined,
+		averageSlope: undefined,
+		maxSlope: undefined,
+	};
+	const [ride, setRide] = useState(initialRideState);
+	const [selectedPictures, setSelectedPictures] = useState(undefined);
+	const [currentPicture, setCurrentPicture] = useState(undefined);
 
-	const upload = (e) => {
-		const data = new FormData();
-		data.append('name', name);
-		data.append('file', picture);
+	const handleInputChange = (event) => {
+		const { name, value } = event.target;
+		setRide({ ...ride, [name]: value });
+	};
 
-		axios
-			.post('https://httpbin.org//anything', data)
-			.then((res) => console.log(res))
+	const selectPicture = (e) => {
+		setSelectedPictures(e.target.files);
+	};
+
+	const upload = () => {
+		let currentPicture =
+			selectedPictures === undefined ? undefined : selectedPictures[0];
+
+		setCurrentPicture(currentPicture);
+
+		RideService.createWithPicture(currentPicture);
+
+		setSelectedPictures(undefined);
+	};
+
+	const saveRide = (e) => {
+		e.preventDefault();
+		const data = {
+			name: ride.name,
+			picture: ride.picture,
+			startLocation: ride.startLocation,
+			altitude: ride.altitude,
+			mountain: ride.mountain,
+			kilometers: ride.kilometers,
+			elevation: ride.elevation,
+			averageSlope: ride.averageSlope,
+			maxSlope: ride.maxSlope,
+		};
+
+		RideService.create(data)
+			.then((res) => {
+				setRide({
+					id: res.data.id,
+					name: res.data.name,
+					picture: res.data.picture,
+					startLocation: res.data.startLocation,
+					altitude: res.data.altitude,
+					mountain: res.data.mountain,
+					kilometers: res.data.kilometers,
+					elevation: res.data.elevation,
+					averageSlope: res.data.averageSlope,
+					maxSlope: res.data.maxSlope,
+				});
+			})
 			.catch((err) => console.log(err));
 	};
 
@@ -66,15 +116,15 @@ function RideForm() {
 				</Typography>
 				<form
 					className={classes.form}
-					onSubmit={handleSubmit}
+					onSubmit={saveRide}
 					noValidate
 					autoComplete="off"
 				>
 					<TextField
 						id="name"
 						name="name"
-						inputRef={register}
-						onChange={(e) => setName(e.target.value)}
+						value={ride.name}
+						onChange={handleInputChange}
 						label="name"
 						required
 						autoFocus
@@ -85,8 +135,8 @@ function RideForm() {
 					<TextField
 						id="mountain"
 						name="mountain"
-						inputRef={register}
-						onChange={(e) => setMountain(e.target.value)}
+						value={ride.mountain}
+						onChange={handleInputChange}
 						label="mountain"
 						variant="outlined"
 						margin="normal"
@@ -95,11 +145,8 @@ function RideForm() {
 					<input
 						id="upload-picture"
 						name="upload-picture"
-						onChange={(e) => {
-							const file = e.target.files[0];
-							setPicture(file);
-						}}
-						ref={register}
+						value={ride.picture}
+						onChange={selectPicture}
 						type="file"
 						accept="image/*"
 						style={{ display: 'none' }}
@@ -116,11 +163,11 @@ function RideForm() {
 						</Button>
 					</label>
 					<TextField
-						id="distance"
-						name="distance"
-						onChange={(e) => setDistance(e.target.value)}
-						inputRef={register}
-						label="distance"
+						id="kilometers"
+						name="kilometers"
+						value={ride.kilometers}
+						onChange={handleInputChange}
+						label="kilometers"
 						variant="outlined"
 						margin="normal"
 						fullWidth
@@ -131,8 +178,8 @@ function RideForm() {
 					<TextField
 						id="elevation"
 						name="elevation"
-						onChange={(e) => setElevation(e.target.value)}
-						inputRef={register}
+						value={ride.elevation}
+						onChange={handleInputChange}
 						label="elevation"
 						variant="outlined"
 						margin="normal"
@@ -144,8 +191,8 @@ function RideForm() {
 					<TextField
 						id="averageSlope"
 						name="averageSlope"
-						onChange={(e) => setAverageSlope(e.target.value)}
-						inputRef={register}
+						value={ride.averageSlope}
+						onChange={handleInputChange}
 						label="averageSlope"
 						variant="outlined"
 						margin="normal"
