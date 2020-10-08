@@ -1,30 +1,30 @@
 const db = require('../models');
 const Ride = db.rides;
+Ride.sync();
 
 exports.createRide = (req, res) => {
-	const ride = {
-		name: req.body.name,
-		picture: req.body.picture,
-		startLocation: req.body.startLocation,
-		altitude: req.body.altitude,
-		mountain: req.body.mountain,
-		kilometers: req.body.kilometers,
-		elevation: req.body.elevation,
-		averageSlope: req.body.averageSlope,
-		maxSlope: req.body.maxSlope,
+	const rideWithPic = {
+		...req.body,
+		picture: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
 	};
 
-	const rideWithPic = new Ride({
-		...ride,
-		picture: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-	});
-
 	Ride.create(rideWithPic)
-		.then(() => {
-			res.status(201).json({ message: 'The ride has been created.' });
-		})
+		.then(() =>
+			res.status(201).json({
+				message: `The ride has been created: ${JSON.stringify(rideWithPic)}`,
+			})
+		)
 		.catch((err) => {
-			res.status(500).json({ err });
+			if (req.file === undefined) {
+				return res.status(400).send({ message: 'Please upload a picture' });
+			} else if (err.code === 'LIMIT_FILE_SIZE') {
+				return res
+					.status(500)
+					.send({ message: 'The picture size should be 2Mo max.' });
+			}
+			res.status(500).send({
+				message: `Could not save the ride: ${req.body.name} ${err}`,
+			});
 		});
 };
 
