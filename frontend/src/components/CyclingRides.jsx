@@ -1,4 +1,5 @@
 import React from 'react';
+import { Switch, Route, Link } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import MyProfile from './MyProfile';
@@ -19,12 +20,12 @@ function CyclingRides() {
 	return (
 		<div className="cycling-rides">
 			<MuiThemeProvider theme={THEME}>
-				<NewsCarousel />
-				<RidesGallery />
-				<RideForm />
-				<MyProfile />
-				<SignIn />
 				<ResponsiveDrawer />
+				<Route exact path={['/']} component={NewsCarousel}></Route>
+				<Route exact path={['/']} component={RidesGallery}></Route>
+				<Route path={['/add']} component={RideForm}></Route>
+				<Route path={['/profile']} component={MyProfile}></Route>
+				<Route path={['/signin']} component={SignIn}></Route>
 			</MuiThemeProvider>
 		</div>
 	);
