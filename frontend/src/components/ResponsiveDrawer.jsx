@@ -1,4 +1,6 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -47,25 +49,32 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 function ResponsiveDrawer() {
-	const dummyCategories = [
-		'Home',
-		'Gallery',
-		'Add a ride',
-		'Signin',
-		'Profile',
+	const routeList = [
+		{ id: 1, name: 'Home', path: '/' },
+		{ id: 2, name: 'Add a ride', path: '/add' },
+		{ id: 3, name: 'Signin', path: '/signin' },
+		{ id: 4, name: 'Profile', path: '/profile' },
 	];
+
 	const classes = useStyles();
 	const theme = useTheme();
 	const [mobileOpen, setMobileOpen] = React.useState(false);
+	let history = useHistory();
+
 	function handleDrawerToggle() {
 		setMobileOpen(!mobileOpen);
 	}
+
+	function navigateToPath(route) {
+		history.push(route.path);
+	}
+
 	const drawer = (
 		<div>
 			<List>
-				{dummyCategories.map((text, index) => (
-					<ListItem button key={text}>
-						<ListItemText primary={text} />
+				{routeList.map((route, id) => (
+					<ListItem button onClick={() => navigateToPath(route)} key={id}>
+						<ListItemText primary={route.name} />
 					</ListItem>
 				))}
 			</List>
@@ -92,7 +101,6 @@ function ResponsiveDrawer() {
 			</AppBar>
 
 			<nav className={classes.drawer}>
-				{/* The implementation can be swapped with js to avoid SEO duplication of links. */}
 				<Hidden smUp implementation="css">
 					<Drawer
 						variant="temporary"
@@ -103,7 +111,7 @@ function ResponsiveDrawer() {
 							paper: classes.drawerPaper,
 						}}
 						ModalProps={{
-							keepMounted: true, // Better open performance on mobile.
+							keepMounted: true,
 						}}
 					>
 						<IconButton
