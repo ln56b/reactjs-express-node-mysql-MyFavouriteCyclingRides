@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import RideService from '../services/RideService';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -11,6 +12,13 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
+		flexGrow: 1,
+		display: 'flex',
+		justifyContent: 'center',
+		flexWrap: 'wrap',
+		marginTop: '100px',
+	},
+	card: {
 		maxWidth: 500,
 		margin: 25,
 	},
@@ -19,53 +27,80 @@ const useStyles = makeStyles((theme) => ({
 		width: 350,
 		objectFit: 'cover',
 	},
+	actions: {
+		display: 'flex',
+		justifyContent: 'space-between',
+	},
 }));
 
-function RidesGallery() {
+function RidesGallery({ rides, getRides, deleteRide }) {
 	const classes = useStyles();
-	const [rides, setRides] = useState([]);
-	const [, setError] = useState('');
 
 	useEffect(() => {
 		getRides();
 	}, []);
 
-	const getRides = () => {
-		RideService.findAll()
-			.then((res) => setRides(res.data))
-			.catch((err) => setError(err.message));
-	};
-
 	return (
 		<div className="rides-gallery">
-			{rides.map((ride) => (
-				<Card className={classes.root} key={ride.id}>
-					<CardHeader title={ride.name} subheader={ride.mountain} />
-					<CardMedia
-						className={classes.media}
-						image={ride.picture}
-						title={ride.name}
-					/>
-					<CardContent>
-						<Typography variant="body2" color="textSecondary" component="p">
-							Distance: {ride.kilometers}km
-						</Typography>
-						<Typography variant="body2" color="textSecondary" component="p">
-							Elevation: {ride.elevation}m
-						</Typography>{' '}
-						<Typography variant="body2" color="textSecondary" component="p">
-							Average slope: {ride.averageSlope}m
-						</Typography>
-					</CardContent>
-					<CardActions>
-						<Button size="small" color="primary">
-							Learn More
-						</Button>
-					</CardActions>
-				</Card>
-			))}
+			<Grid container className={classes.root} spacing={2}>
+				{rides.map(
+					(ride) =>
+						ride.picture && (
+							<Card className={classes.card} key={ride.id}>
+								<CardHeader title={ride.name} subheader={ride.mountain} />
+								<CardMedia
+									className={classes.media}
+									image={ride.picture}
+									title={ride.name}
+								/>
+								<CardContent>
+									<Typography
+										variant="body2"
+										color="textSecondary"
+										component="p"
+									>
+										Distance: {ride.kilometers}km
+									</Typography>
+									<Typography
+										variant="body2"
+										color="textSecondary"
+										component="p"
+									>
+										Elevation: {ride.elevation}m
+									</Typography>{' '}
+									<Typography
+										variant="body2"
+										color="textSecondary"
+										component="p"
+									>
+										Average slope: {ride.averageSlope}m
+									</Typography>
+								</CardContent>
+								<CardActions className={classes.actions}>
+									<Button size="small" color="primary">
+										Learn more
+									</Button>
+									<Button
+										onClick={deleteRide}
+										size="small"
+										variant="contained"
+										color="secondary"
+									>
+										Delete ride
+									</Button>
+								</CardActions>
+							</Card>
+						)
+				)}
+			</Grid>
 		</div>
 	);
 }
+
+RidesGallery.propTypes = {
+	rides: PropTypes.array.isRequired,
+	getRides: PropTypes.func.isRequired,
+	deleteRide: PropTypes.func.isRequired,
+};
 
 export default RidesGallery;

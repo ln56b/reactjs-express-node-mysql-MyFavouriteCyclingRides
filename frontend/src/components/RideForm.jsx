@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import RideService from '../services/RideService';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import Avatar from '@material-ui/core/Avatar';
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
@@ -32,42 +32,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function RideForm() {
+function RideForm({ ride, saveRide, handleInputChange, selectPicture }) {
 	const classes = useStyles();
-
-	const initialRideState = {
-		id: '',
-		name: '',
-		picture: '',
-		startLocation: '',
-		altitude: 0,
-		mountain: '',
-		kilometers: 0,
-		elevation: 0,
-		averageSlope: 0,
-		maxSlope: 0,
-	};
-
-	const [ride, setRide] = useState(initialRideState);
-	const [selectedPicture, setSelectedPicture] = useState(undefined);
-
-	const handleInputChange = (event) => {
-		const { name, value } = event.target;
-		setRide({ ...ride, [name]: value });
-	};
-
-	const selectPicture = (e) => {
-		const picture = e.target.files[0];
-		setSelectedPicture(picture);
-	};
-
-	const saveRide = (e) => {
-		e.preventDefault();
-
-		RideService.create(ride, selectedPicture)
-			.then(() => console.log('The ride has been successfully created.'))
-			.catch((err) => console.log(err));
-	};
 
 	return (
 		<Container component="main" maxWidth="xs">
@@ -180,4 +146,10 @@ function RideForm() {
 	);
 }
 
+RideForm.propTypes = {
+	ride: PropTypes.object.isRequired,
+	saveRide: PropTypes.func.isRequired,
+	handleInputChange: PropTypes.func.isRequired,
+	selectPicture: PropTypes.func.isRequired,
+};
 export default RideForm;
