@@ -1,7 +1,11 @@
 import http from '../http-common';
 
-const create = (data) => {
-	return http.post('/rides', data);
+const create = (ride, picture) => {
+	const rideData = new FormData();
+
+	rideData.append('ride', JSON.stringify(ride));
+	rideData.append('picture', picture, picture.name);
+	return http.post('/rides', rideData);
 };
 
 const findAll = () => {
@@ -12,8 +16,8 @@ const findOne = (id) => {
 	return http.get(`/rides/${id}`);
 };
 
-const update = (id, data) => {
-	return http.put(`/rides/${id}`, data);
+const update = (id, ride) => {
+	return http.put(`/rides/${id}`, ride);
 };
 
 const remove = (id) => {

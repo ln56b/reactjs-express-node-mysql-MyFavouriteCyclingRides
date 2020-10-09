@@ -3,8 +3,9 @@ const Ride = db.rides;
 Ride.sync();
 
 exports.createRide = (req, res) => {
+	const rideObject = JSON.parse(req.body.ride);
 	const rideWithPic = {
-		...req.body,
+		...rideObject,
 		picture: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
 	};
 

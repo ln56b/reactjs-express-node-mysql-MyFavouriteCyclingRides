@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import RideService from '../services/RideService';
-import UploadService from '../services/UploadPictureService';
 
 import Avatar from '@material-ui/core/Avatar';
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
@@ -41,16 +40,16 @@ function RideForm() {
 		name: '',
 		picture: '',
 		startLocation: '',
-		altitude: undefined,
+		altitude: 0,
 		mountain: '',
-		kilometers: undefined,
-		elevation: undefined,
-		averageSlope: undefined,
-		maxSlope: undefined,
+		kilometers: 0,
+		elevation: 0,
+		averageSlope: 0,
+		maxSlope: 0,
 	};
+
 	const [ride, setRide] = useState(initialRideState);
-	const [selectedPictures, setSelectedPictures] = useState(undefined);
-	const [currentPicture, setCurrentPicture] = useState(undefined);
+	const [selectedPicture, setSelectedPicture] = useState(undefined);
 
 	const handleInputChange = (event) => {
 		const { name, value } = event.target;
@@ -58,49 +57,15 @@ function RideForm() {
 	};
 
 	const selectPicture = (e) => {
-		setSelectedPictures(e.target.files);
-	};
-
-	const upload = () => {
-		let currentPicture =
-			selectedPictures === undefined ? undefined : selectedPictures[0];
-
-		setCurrentPicture(currentPicture);
-
-		RideService.createWithPicture(currentPicture);
-
-		setSelectedPictures(undefined);
+		const picture = e.target.files[0];
+		setSelectedPicture(picture);
 	};
 
 	const saveRide = (e) => {
 		e.preventDefault();
-		const data = {
-			name: ride.name,
-			picture: ride.picture,
-			startLocation: ride.startLocation,
-			altitude: ride.altitude,
-			mountain: ride.mountain,
-			kilometers: ride.kilometers,
-			elevation: ride.elevation,
-			averageSlope: ride.averageSlope,
-			maxSlope: ride.maxSlope,
-		};
 
-		RideService.create(data)
-			.then((res) => {
-				setRide({
-					id: res.data.id,
-					name: res.data.name,
-					picture: res.data.picture,
-					startLocation: res.data.startLocation,
-					altitude: res.data.altitude,
-					mountain: res.data.mountain,
-					kilometers: res.data.kilometers,
-					elevation: res.data.elevation,
-					averageSlope: res.data.averageSlope,
-					maxSlope: res.data.maxSlope,
-				});
-			})
+		RideService.create(ride, selectedPicture)
+			.then(() => console.log('The ride has been successfully created.'))
 			.catch((err) => console.log(err));
 	};
 
@@ -157,9 +122,8 @@ function RideForm() {
 							color="secondary"
 							variant="contained"
 							aria-label="add"
-							onClick={upload}
 						>
-							<AddIcon /> Add picture
+							<AddIcon /> Add picture *
 						</Button>
 					</label>
 					<TextField
