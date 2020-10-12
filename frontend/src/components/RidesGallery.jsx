@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -27,13 +30,9 @@ const useStyles = makeStyles((theme) => ({
 		width: 350,
 		objectFit: 'cover',
 	},
-	actions: {
-		display: 'flex',
-		justifyContent: 'space-between',
-	},
 }));
 
-function RidesGallery({ rides, getRides, deleteRide }) {
+function RidesGallery({ rides, getRides, getRideById }) {
 	const classes = useStyles();
 
 	useEffect(() => {
@@ -42,57 +41,55 @@ function RidesGallery({ rides, getRides, deleteRide }) {
 
 	return (
 		<div className="rides-gallery">
-			<Grid container className={classes.root} spacing={2}>
-				{rides.map(
-					(ride) =>
-						ride.picture && (
-							<Card className={classes.card} key={ride.id}>
-								<CardHeader title={ride.name} subheader={ride.mountain} />
-								<CardMedia
-									className={classes.media}
-									image={ride.picture}
-									title={ride.name}
-								/>
-								<CardContent>
-									<Typography
-										variant="body2"
-										color="textSecondary"
-										component="p"
-									>
-										Distance: {ride.kilometers}km
-									</Typography>
-									<Typography
-										variant="body2"
-										color="textSecondary"
-										component="p"
-									>
-										Elevation: {ride.elevation}m
-									</Typography>{' '}
-									<Typography
-										variant="body2"
-										color="textSecondary"
-										component="p"
-									>
-										Average slope: {ride.averageSlope}m
-									</Typography>
-								</CardContent>
-								<CardActions className={classes.actions}>
-									<Button size="small" color="primary">
-										Learn more
-									</Button>
-									<Button
-										onClick={deleteRide}
-										size="small"
-										variant="contained"
-										color="secondary"
-									>
-										Delete ride
-									</Button>
-								</CardActions>
-							</Card>
-						)
-				)}
-			</Grid>
+			{rides.length ? (
+				<Grid container className={classes.root} spacing={2}>
+					{rides.map(
+						(ride) =>
+							ride.picture && (
+								<Card className={classes.card} key={ride.id}>
+									<CardHeader title={ride.name} subheader={ride.mountain} />
+									<CardMedia
+										className={classes.media}
+										image={ride.picture}
+										title={ride.name}
+									/>
+									<CardContent>
+										<Typography
+											variant="body2"
+											color="textSecondary"
+											component="p"
+										>
+											Distance: {ride.kilometers}km
+										</Typography>
+										<Typography
+											variant="body2"
+											color="textSecondary"
+											component="p"
+										>
+											Elevation: {ride.elevation}m
+										</Typography>{' '}
+										<Typography
+											variant="body2"
+											color="textSecondary"
+											component="p"
+										>
+											Average slope: {ride.averageSlope}m
+										</Typography>
+									</CardContent>
+									<CardActions>
+										<Link to={`/rides/${ride.id}`}>
+											<Button size="small" color="primary">
+												Learn more
+											</Button>
+										</Link>
+									</CardActions>
+								</Card>
+							)
+					)}
+				</Grid>
+			) : (
+				<CircularProgress />
+			)}
 		</div>
 	);
 }
@@ -100,7 +97,6 @@ function RidesGallery({ rides, getRides, deleteRide }) {
 RidesGallery.propTypes = {
 	rides: PropTypes.array.isRequired,
 	getRides: PropTypes.func.isRequired,
-	deleteRide: PropTypes.func.isRequired,
 };
 
 export default RidesGallery;
