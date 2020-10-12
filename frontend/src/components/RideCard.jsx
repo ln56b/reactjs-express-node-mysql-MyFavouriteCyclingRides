@@ -42,7 +42,7 @@ function RideCard({ ride, getRideById, deleteRide }) {
 
 	useEffect(() => {
 		getRideById(id);
-	}, [id]);
+	}, []);
 
 	return (
 		<div className="ride-card">

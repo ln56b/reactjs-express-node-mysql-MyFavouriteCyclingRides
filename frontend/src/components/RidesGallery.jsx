@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function RidesGallery({ rides, getRides, getRideById }) {
+function RidesGallery({ rides, getRides }) {
 	const classes = useStyles();
 
 	useEffect(() => {

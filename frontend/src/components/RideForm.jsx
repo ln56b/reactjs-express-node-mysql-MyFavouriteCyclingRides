@@ -76,7 +76,6 @@ function RideForm({ ride, saveRide, handleInputChange, selectPicture }) {
 					<input
 						id="upload-picture"
 						name="upload-picture"
-						value={ride.picture}
 						onChange={selectPicture}
 						type="file"
 						accept="image/*"

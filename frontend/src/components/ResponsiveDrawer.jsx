@@ -52,7 +52,7 @@ function ResponsiveDrawer() {
 	const routeList = [
 		{ id: 1, name: 'Home', path: '/' },
 		{ id: 2, name: 'Gallery', path: '/rides' },
-		{ id: 3, name: 'Add a ride', path: '/rides/add' },
+		{ id: 3, name: 'Add a ride', path: '/add-ride' },
 		{ id: 4, name: 'Signin', path: '/signin' },
 		{ id: 5, name: 'Profile', path: '/profile' },
 	];
