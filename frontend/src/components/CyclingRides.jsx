@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import RideService from '../services/RideService';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -18,7 +19,9 @@ const THEME = createMuiTheme({
 	},
 });
 
-function CyclingRides() {
+function CyclingRides(props) {
+	let history = useHistory();
+
 	const initialRideState = {
 		id: '',
 		name: '',
@@ -47,12 +50,21 @@ function CyclingRides() {
 		e.preventDefault();
 
 		RideService.create(ride, selectedPicture)
-			.then(() => console.log('The ride has been successfully created.'))
+			.then(() => {
+				console.log('The ride has been successfully created.');
+				history.push('/rides');
+			})
 			.catch((err) => console.log(err));
 	};
 
-	const deleteRide = (ride) => {
+	const deleteRide = () => {
 		//TODO
+		RideService.remove(ride.id)
+			.then(() => {
+				console.log('The ride has been successfully deleted.');
+				props.history.push('/signin');
+			})
+			.catch((err) => console.log(err));
 	};
 
 	const handleInputChange = (event) => {
@@ -71,6 +83,7 @@ function CyclingRides() {
 				<ResponsiveDrawer />
 				<Route exact path={['/']} component={NewsCarousel}></Route>
 				<Route
+					exact
 					path={['/rides']}
 					render={(props) => (
 						<RidesGallery
@@ -82,7 +95,7 @@ function CyclingRides() {
 					)}
 				></Route>
 				<Route
-					path={['/add']}
+					path={['/rides/add']}
 					render={(props) => (
 						<RideForm
 							{...props}
