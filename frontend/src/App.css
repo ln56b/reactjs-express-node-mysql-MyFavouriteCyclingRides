@@ -1,18 +1,7 @@
-.rides-gallery {
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	margin-top: 100px;
-}
-
 @media screen and (min-width: 768px) {
 	.cycling-rides {
 		margin-left: 15vw;
 		margin-right: auto;
 		width: 70vw;
-	}
-
-	.rides-gallery {
-		/* margin-left: 240px; */
 	}
 }
