@@ -3,10 +3,10 @@ import Carousel from 'react-material-ui-carousel';
 
 import { Paper } from '@material-ui/core';
 
-import panoramic1 from '../assets/panoramic1.jpg';
-import panoramic2 from '../assets/panoramic2.jpg';
-import panoramic3 from '../assets/panoramic3.jpg';
-import panoramic4 from '../assets/panoramic4.jpg';
+import allos from '../assets/allos.jpeg';
+import bonnette from '../assets/bonnette.jpeg';
+import glandon from '../assets/glandon.jpeg';
+import izoard from '../assets/izoard.jpeg';
 //TODO check require vs import
 require('default-passive-events');
 
@@ -15,10 +15,11 @@ function Project(props) {
 		<Paper
 			style={{
 				backgroundImage: `url(${props.item.image})`,
-				backgroundRepeat: 'no-repeat',
-				height: '40vh',
-				marginTop: '5vw',
+				backgroundPosition: 'center',
+				backgroundSize: 'cover',
+				height: '70vh',
 				padding: '2rem',
+				color: 'white',
 			}}
 			elevation={2}
 		>
@@ -30,25 +31,27 @@ function Project(props) {
 
 const items = [
 	{
-		image: panoramic1,
-		name: 'Lear Music Reader',
-		description: 'A PDF Reader specially designed for musicians.',
+		image: bonnette,
+		name: 'Col de la Bonnette',
+		description: 'The climb is ranked 323 in the world.',
 	},
 	{
-		image: panoramic4,
-		name: 'Hash Code 2019',
+		image: glandon,
+		name: 'Col du Glandon',
 		description:
-			'My Solution on the 2019 Hash Code by Google Slideshow problem.',
+			'The Col du Glandon is a varied climb with a range of slopes, a ‘must do’ ride in Bourg D’Oisans.',
 	},
 	{
-		image: panoramic3,
-		name: 'Terrio',
-		description: 'A exciting mobile game game made in the Unity Engine.',
+		image: izoard,
+		name: "Col de l'Izoard",
+		description:
+			'The southern route begins in Guillestre and is a long climb by French Alps standards at 29 km. ',
 	},
 	{
-		image: panoramic2,
-		name: 'React Carousel',
-		description: 'A Generic carousel UI component for React using material ui.',
+		image: allos,
+		name: "Col d'Allos",
+		description:
+			"Barcelonnette is the starting point of the northern ascent of the Col d'Allos.",
 	},
 ];
 

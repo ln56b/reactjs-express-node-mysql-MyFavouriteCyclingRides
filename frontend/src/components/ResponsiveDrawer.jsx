@@ -15,7 +15,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-const drawerWidth = 240;
+const drawerWidth = 160;
 const useStyles = makeStyles((theme) => ({
 	root: {
 		display: 'flex',
@@ -51,9 +51,10 @@ const useStyles = makeStyles((theme) => ({
 function ResponsiveDrawer() {
 	const routeList = [
 		{ id: 1, name: 'Home', path: '/' },
-		{ id: 2, name: 'Add a ride', path: '/add' },
-		{ id: 3, name: 'Signin', path: '/signin' },
-		{ id: 4, name: 'Profile', path: '/profile' },
+		{ id: 2, name: 'Gallery', path: '/rides' },
+		{ id: 3, name: 'Add a ride', path: '/rides/add' },
+		{ id: 4, name: 'Signin', path: '/signin' },
+		{ id: 5, name: 'Profile', path: '/profile' },
 	];
 
 	const classes = useStyles();
