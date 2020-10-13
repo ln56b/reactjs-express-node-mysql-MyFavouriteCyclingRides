@@ -54,6 +54,7 @@ function CyclingRides(props) {
 
 	const createRide = () => {
 		RideService.create(ride, selectedPicture)
+			.then(setRide(initialRideState))
 			.then(() => {
 				history.push('/rides');
 			})
@@ -62,6 +63,7 @@ function CyclingRides(props) {
 
 	const updateRide = () => {
 		RideService.update(ride.id, ride, selectedPicture)
+			.then(setRide(initialRideState))
 			.then(() => {
 				history.push('/rides');
 			})
