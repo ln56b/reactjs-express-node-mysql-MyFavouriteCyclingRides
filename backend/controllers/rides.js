@@ -46,9 +46,18 @@ exports.getOneRide = (req, res) => {
 };
 
 exports.updateRide = (req, res) => {
+	const rideObject = req.file
+		? {
+				...JSON.parse(req.body.ride),
+				picture: `${req.protocol}://${req.get('host')}/images/${
+					req.file.filename
+				}`,
+		  }
+		: { ...req.body };
+
 	const rideId = req.params.id;
 
-	Ride.update(req.body, {
+	Ride.update(rideObject, {
 		where: { id: rideId },
 	})
 		.then(() => res.status(200).json({ message: 'The ride has been updated.' }))

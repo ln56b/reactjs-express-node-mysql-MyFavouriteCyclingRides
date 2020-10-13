@@ -14,7 +14,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.post('/', multer, ridesControl.createRide);
 router.get('/', ridesControl.getAllRides);
 router.get('/:id', ridesControl.getOneRide);
-router.put('/:id', ridesControl.updateRide);
+router.put('/:id', multer, ridesControl.updateRide);
 router.delete('/:id', ridesControl.deleteRide);
 
 module.exports = router;

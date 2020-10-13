@@ -61,7 +61,7 @@ function CyclingRides(props) {
 	};
 
 	const updateRide = () => {
-		RideService.update(ride.id, ride)
+		RideService.update(ride.id, ride, selectedPicture)
 			.then(() => {
 				history.push('/rides');
 			})
