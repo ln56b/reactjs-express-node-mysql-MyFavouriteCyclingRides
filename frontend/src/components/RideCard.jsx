@@ -21,17 +21,25 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: '100px',
 	},
 	card: {
-		// maxWidth: 500,
-		// margin: 25,
+		maxWidth: 800,
+		margin: 25,
+	},
+	detailedInfo: {
+		display: 'flex',
+		flexDirection: 'column',
+		flexWrap: 'wrap',
 	},
 	media: {
-		height: 300,
-		width: 350,
+		height: 500,
+		width: 'auto',
 		objectFit: 'cover',
 	},
 	actions: {
 		display: 'flex',
 		justifyContent: 'space-between',
+	},
+	title: {
+		fontSize: 18,
 	},
 }));
 
@@ -49,20 +57,53 @@ function RideCard({ ride, getRideById, deleteRide }) {
 			{ride.picture ? (
 				<Card className={classes.card} key={ride.id}>
 					<CardHeader title={ride.name} subheader={ride.mountain} />
+					<CardContent
+						style={{
+							display: ride.startLocation ? 'inline-block' : 'none',
+						}}
+					>
+						<Typography
+							className={classes.title}
+							color="textSecondary"
+							gutterBottom
+						>
+							From {ride.startLocation}
+						</Typography>
+					</CardContent>
 					<CardMedia
 						className={classes.media}
 						image={ride.picture}
 						title={ride.name}
 					/>
-					<CardContent>
+					<CardContent className={classes.detailedInfo}>
 						<Typography variant="body2" color="textSecondary" component="p">
 							Distance: {ride.kilometers}km
 						</Typography>
 						<Typography variant="body2" color="textSecondary" component="p">
 							Elevation: {ride.elevation}m
-						</Typography>{' '}
+						</Typography>
+						<Typography
+							variant="body2"
+							color="textSecondary"
+							component="p"
+							style={{
+								display: ride.altitude ? 'inline' : 'none',
+							}}
+						>
+							Altitude: {ride.altitude}m
+						</Typography>
 						<Typography variant="body2" color="textSecondary" component="p">
 							Average slope: {ride.averageSlope}m
+						</Typography>
+						<Typography
+							variant="body2"
+							color="textSecondary"
+							component="p"
+							style={{
+								display: ride.maxSlope ? 'inline' : 'none',
+							}}
+						>
+							Max slope: {ride.maxSlope}m
 						</Typography>
 					</CardContent>
 					<CardActions className={classes.actions}>

@@ -73,6 +73,19 @@ function RideForm({ ride, saveRide, handleInputChange, selectPicture }) {
 						margin="normal"
 						fullWidth
 					/>
+					<TextField
+						id="startLocation"
+						name="startLocation"
+						value={ride.startLocation}
+						onChange={handleInputChange}
+						label="startLocation"
+						variant="outlined"
+						margin="normal"
+						fullWidth
+						style={{
+							display: ride.id ? 'block' : 'none',
+						}}
+					/>
 					<input
 						id="upload-picture"
 						name="upload-picture"
@@ -128,6 +141,38 @@ function RideForm({ ride, saveRide, handleInputChange, selectPicture }) {
 						fullWidth
 						InputProps={{
 							endAdornment: <InputAdornment position="end">%</InputAdornment>,
+						}}
+					/>
+					<TextField
+						id="altitude"
+						name="altitude"
+						value={ride.altitude}
+						onChange={handleInputChange}
+						label="altitude"
+						variant="outlined"
+						margin="normal"
+						fullWidth
+						InputProps={{
+							endAdornment: <InputAdornment position="end">m</InputAdornment>,
+						}}
+						style={{
+							display: ride.id ? 'block' : 'none',
+						}}
+					/>
+					<TextField
+						id="maxSlope"
+						name="maxSlope"
+						value={ride.maxSlope}
+						onChange={handleInputChange}
+						label="maxSlope"
+						variant="outlined"
+						margin="normal"
+						fullWidth
+						InputProps={{
+							endAdornment: <InputAdornment position="end">m</InputAdornment>,
+						}}
+						style={{
+							display: ride.id ? 'block' : 'none',
 						}}
 					/>
 					<Button

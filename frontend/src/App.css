@@ -4,4 +4,7 @@
 		margin-right: auto;
 		width: 70vw;
 	}
+	.MuiCardContent-root {
+		max-height: 10vh;
+	}
 }
