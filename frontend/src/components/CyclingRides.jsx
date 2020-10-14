@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Route, useHistory } from 'react-router-dom';
 import RideService from '../services/RideService';
 
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-
+import { useConfirmationDialog } from './ConfirmationDialog';
 import MyProfile from './MyProfile';
 import ResponsiveDrawer from './ResponsiveDrawer';
 import RideCard from './RideCard';
@@ -12,6 +11,8 @@ import RidesGallery from './RidesGallery';
 import NewsCarousel from './NewsCarousel';
 import SignIn from './Signin';
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
 const THEME = createMuiTheme({
 	typography: {
 		fontFamily: `'Architects Daughter', cursive`,
@@ -19,7 +20,7 @@ const THEME = createMuiTheme({
 	},
 });
 
-function CyclingRides(props) {
+function CyclingRides() {
 	const initialRideState = {
 		id: '',
 		name: '',
@@ -39,6 +40,7 @@ function CyclingRides(props) {
 	const [selectedPicture, setSelectedPicture] = useState(undefined);
 
 	let history = useHistory();
+	const { getConfirmation } = useConfirmationDialog();
 
 	const getRides = () => {
 		RideService.findAll()
@@ -75,14 +77,20 @@ function CyclingRides(props) {
 		ride.id ? updateRide() : createRide();
 	};
 
-	const deleteRide = (ride, id) => {
-		setRide(ride);
-		RideService.remove(id)
-			.then(() => {
-				history.push('/rides');
-				getRides();
-			})
-			.catch((err) => console.log(err));
+	const deleteRide = async (ride, id) => {
+		const confirmed = await getConfirmation({
+			title: 'Delete ride ?',
+			message: 'This action cannot be cancelled.',
+		});
+
+		if (confirmed) {
+			RideService.remove(id)
+				.then(() => {
+					history.push('/rides');
+					getRides();
+				})
+				.catch((err) => console.log(err));
+		}
 	};
 
 	const handleInputChange = (event) => {

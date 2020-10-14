@@ -1,12 +1,15 @@
 import React from 'react';
 import './App.css';
 import CyclingRides from './components/CyclingRides';
+import { ConfirmationDialogProvider } from './components/ConfirmationDialog';
 
 function App() {
 	return (
-		<div>
-			<CyclingRides />
-		</div>
+		<ConfirmationDialogProvider>
+			<div>
+				<CyclingRides />
+			</div>
+		</ConfirmationDialogProvider>
 	);
 }
 

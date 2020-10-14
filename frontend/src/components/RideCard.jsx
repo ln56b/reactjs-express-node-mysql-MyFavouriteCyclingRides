@@ -54,7 +54,7 @@ function RideCard({ ride, getRideById, deleteRide }) {
 
 	return (
 		<div className="ride-card">
-			{ride.picture ? (
+			{ride?.picture ? (
 				<Card className={classes.card} key={ride.id}>
 					<CardHeader title={ride.name} subheader={ride.mountain} />
 					<CardContent
