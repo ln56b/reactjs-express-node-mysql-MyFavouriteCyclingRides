@@ -30,6 +30,13 @@ const useStyles = makeStyles((theme) => ({
 		width: 350,
 		objectFit: 'cover',
 	},
+	empty: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		fontSize: '20px',
+	},
 }));
 
 function RidesGallery({ rides, getRides }) {
@@ -88,7 +95,10 @@ function RidesGallery({ rides, getRides }) {
 					)}
 				</Grid>
 			) : (
-				<CircularProgress />
+				<div className={classes.empty}>
+					<CircularProgress />
+					<p>Please add a ride </p>
+				</div>
 			)}
 		</div>
 	);
