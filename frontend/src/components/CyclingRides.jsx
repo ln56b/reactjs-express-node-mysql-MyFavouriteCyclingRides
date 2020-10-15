@@ -3,6 +3,7 @@ import { Route, useHistory } from 'react-router-dom';
 import RideService from '../services/RideService';
 
 import { useConfirmationDialog } from './ConfirmationDialog';
+import Notification from './Notification';
 import MyProfile from './MyProfile';
 import ResponsiveDrawer from './ResponsiveDrawer';
 import RideCard from './RideCard';
@@ -38,6 +39,11 @@ function CyclingRides() {
 	const [, setError] = useState('');
 	const [ride, setRide] = useState(initialRideState);
 	const [selectedPicture, setSelectedPicture] = useState(undefined);
+	const [notify, setNotify] = useState({
+		isOpen: false,
+		message: '',
+		type: '',
+	});
 
 	let history = useHistory();
 	const { getConfirmation } = useConfirmationDialog();
@@ -56,20 +62,48 @@ function CyclingRides() {
 
 	const createRide = () => {
 		RideService.create(ride, selectedPicture)
-			.then(setRide(initialRideState))
+			.then(() =>
+				setNotify({
+					isOpen: true,
+					message: `The ride ${ride.name} has been created`,
+					type: 'success',
+				})
+			)
+			.then(() => setRide(initialRideState))
 			.then(() => {
 				history.push('/rides');
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				console.log(err);
+				setNotify({
+					isOpen: true,
+					message: 'Impossible to create this ride',
+					type: 'error',
+				});
+			});
 	};
 
 	const updateRide = () => {
 		RideService.update(ride.id, ride, selectedPicture)
-			.then(setRide(initialRideState))
+			.then(() =>
+				setNotify({
+					isOpen: true,
+					message: `The ride ${ride.name} has been updated`,
+					type: 'success',
+				})
+			)
+			.then(() => setRide(initialRideState))
 			.then(() => {
 				history.push('/rides');
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				console.log(err);
+				setNotify({
+					isOpen: true,
+					message: `Impossible to update ride ${ride}`,
+					type: 'error',
+				});
+			});
 	};
 
 	const saveRide = (e) => {
@@ -85,11 +119,25 @@ function CyclingRides() {
 
 		if (confirmed) {
 			RideService.remove(id)
+				.then(() =>
+					setNotify({
+						isOpen: true,
+						message: `The ride ${ride.name} has been deleted`,
+						type: 'success',
+					})
+				)
 				.then(() => {
 					history.push('/rides');
 					getRides();
 				})
-				.catch((err) => console.log(err));
+				.catch((err) => {
+					console.log(err);
+					setNotify({
+						isOpen: true,
+						message: `Impossible to delete ride ${ride}`,
+						type: 'error',
+					});
+				});
 		}
 	};
 
@@ -107,6 +155,7 @@ function CyclingRides() {
 		<div className="cycling-rides">
 			<MuiThemeProvider theme={THEME}>
 				<ResponsiveDrawer />
+				<Notification notify={notify} setNotify={setNotify} />
 				<Route exact path="/" component={NewsCarousel}></Route>
 				<Route exact path="/rides">
 					<RidesGallery
