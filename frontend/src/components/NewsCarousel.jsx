@@ -61,7 +61,7 @@ const animation = 'fade';
 
 function NewsCarousel() {
 	return (
-		<div>
+		<div className="news-carousel">
 			<Carousel animation={animation} autoPlay={autoPlay} timer={timer}>
 				{items.map((item, index) => {
 					return <Project item={item} key={index} />;

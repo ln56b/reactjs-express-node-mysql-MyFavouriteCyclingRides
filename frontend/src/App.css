@@ -1,9 +1,13 @@
 @media screen and (min-width: 768px) {
 	.cycling-rides {
-		margin-left: 15vw;
-		margin-right: auto;
+		margin: auto;
 		width: 70vw;
 	}
+
+	.news-carousel {
+		margin-left: 160px;
+	}
+
 	.MuiCardContent-root {
 		max-height: 10vh;
 	}

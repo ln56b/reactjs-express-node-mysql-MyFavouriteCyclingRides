@@ -12,15 +12,6 @@ import RidesGallery from './RidesGallery';
 import NewsCarousel from './NewsCarousel';
 import SignIn from './Signin';
 
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-
-const THEME = createMuiTheme({
-	typography: {
-		fontFamily: `'Architects Daughter', cursive`,
-		fontSize: 16,
-	},
-});
-
 function CyclingRides() {
 	const initialRideState = {
 		id: '',
@@ -153,35 +144,33 @@ function CyclingRides() {
 
 	return (
 		<div className="cycling-rides">
-			<MuiThemeProvider theme={THEME}>
-				<ResponsiveDrawer />
-				<Notification notify={notify} setNotify={setNotify} />
-				<Route exact path="/" component={NewsCarousel}></Route>
-				<Route exact path="/rides">
-					<RidesGallery
-						rides={rides}
-						getRides={getRides}
-						getRideById={getRideById}
-					/>
-				</Route>
-				<Route exact path="/add-ride">
-					<RideForm
-						ride={ride}
-						saveRide={saveRide}
-						handleInputChange={handleInputChange}
-						selectPicture={selectPicture}
-					/>
-				</Route>
-				<Route path="/rides/:id">
-					<RideCard
-						ride={ride}
-						getRideById={getRideById}
-						deleteRide={deleteRide}
-					/>
-				</Route>
-				<Route path="/profile" component={MyProfile}></Route>
-				<Route path="/signin" component={SignIn}></Route>
-			</MuiThemeProvider>
+			<ResponsiveDrawer />
+			<Notification notify={notify} setNotify={setNotify} />
+			<Route exact path="/" component={NewsCarousel}></Route>
+			<Route exact path="/rides">
+				<RidesGallery
+					rides={rides}
+					getRides={getRides}
+					getRideById={getRideById}
+				/>
+			</Route>
+			<Route exact path="/add-ride">
+				<RideForm
+					ride={ride}
+					saveRide={saveRide}
+					handleInputChange={handleInputChange}
+					selectPicture={selectPicture}
+				/>
+			</Route>
+			<Route path="/rides/:id">
+				<RideCard
+					ride={ride}
+					getRideById={getRideById}
+					deleteRide={deleteRide}
+				/>
+			</Route>
+			<Route path="/profile" component={MyProfile}></Route>
+			<Route path="/signin" component={SignIn}></Route>
 		</div>
 	);
 }
