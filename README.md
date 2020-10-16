@@ -4,7 +4,7 @@
 
 **Objectives**
 
-- Add a ride with file upload and simple form
+- Add a ride with file upload and simple form with validation controls
 
 - Update a ride - The form proposes extra fields
 
