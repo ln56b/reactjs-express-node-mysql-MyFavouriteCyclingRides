@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogActions from '@material-ui/core/DialogActions';
-import Button from '@material-ui/core/Button';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const ConfirmationDialog = ({ open, title, message, onConfirm, onDismiss }) => {
 	return (
@@ -72,6 +74,14 @@ const useConfirmationDialog = () => {
 		});
 
 	return { getConfirmation };
+};
+
+ConfirmationDialog.propTypes = {
+	open: PropTypes.bool.isRequired,
+	title: PropTypes.string,
+	message: PropTypes.string,
+	onConfirm: PropTypes.func.isRequired,
+	onDismiss: PropTypes.func.isRequired,
 };
 
 export default ConfirmationDialog;

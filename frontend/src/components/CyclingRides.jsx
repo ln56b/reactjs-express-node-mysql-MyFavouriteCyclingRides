@@ -3,14 +3,12 @@ import { Route, useHistory } from 'react-router-dom';
 import RideService from '../services/RideService';
 
 import { useConfirmationDialog } from './ConfirmationDialog';
+import NewsCarousel from './NewsCarousel';
 import Notification from './Notification';
-import MyProfile from './MyProfile';
 import ResponsiveDrawer from './ResponsiveDrawer';
 import RideCard from './RideCard';
 import RideForm from './RideForm';
 import RidesGallery from './RidesGallery';
-import NewsCarousel from './NewsCarousel';
-import SignIn from './Signin';
 
 function CyclingRides() {
 	const initialRideState = {
@@ -26,10 +24,10 @@ function CyclingRides() {
 		maxSlope: 0,
 	};
 
-	const [rides, setRides] = useState([]);
-	const [, setError] = useState('');
 	const [ride, setRide] = useState(initialRideState);
+	const [rides, setRides] = useState([]);
 	const [selectedPicture, setSelectedPicture] = useState(undefined);
+	const [, setError] = useState('');
 	const [notify, setNotify] = useState({
 		isOpen: false,
 		message: '',
@@ -39,6 +37,7 @@ function CyclingRides() {
 	const history = useHistory();
 	const { getConfirmation } = useConfirmationDialog();
 
+	// CRUD requests
 	const getRides = () => {
 		RideService.findAll()
 			.then((res) => setRides(res.data))
@@ -64,8 +63,7 @@ function CyclingRides() {
 			.then(() => {
 				history.push('/rides');
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch(() => {
 				setNotify({
 					isOpen: true,
 					message: 'Impossible to create this ride',
@@ -87,8 +85,7 @@ function CyclingRides() {
 			.then(() => {
 				history.push('/rides');
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch(() => {
 				setNotify({
 					isOpen: true,
 					message: `Impossible to update ride ${ride}`,
@@ -121,8 +118,7 @@ function CyclingRides() {
 					history.push('/rides');
 					getRides();
 				})
-				.catch((err) => {
-					console.log(err);
+				.catch(() => {
 					setNotify({
 						isOpen: true,
 						message: `Impossible to delete ride ${ride}`,
@@ -132,17 +128,23 @@ function CyclingRides() {
 		}
 	};
 
+	// Form methods
+
 	const handleInputChange = (event) => {
 		const { name, value } = event.target;
 		setRide({ ...ride, [name]: value });
 	};
 
+	const isValidForm = !ride.id
+		? ride.name && selectedPicture
+			? true
+			: false
+		: true;
+
 	const selectPicture = (e) => {
 		const picture = e.target.files[0];
 		setSelectedPicture(picture);
 	};
-
-	const isValidForm = ride.name && selectedPicture ? true : false;
 
 	return (
 		<div className="cycling-rides">
@@ -172,8 +174,6 @@ function CyclingRides() {
 					deleteRide={deleteRide}
 				/>
 			</Route>
-			<Route path="/profile" component={MyProfile}></Route>
-			<Route path="/signin" component={SignIn}></Route>
 		</div>
 	);
 }

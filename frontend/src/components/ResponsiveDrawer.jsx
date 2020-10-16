@@ -1,7 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import CloseIcon from '@material-ui/icons/Close';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
@@ -10,19 +12,24 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from '@material-ui/icons/Menu';
-import CloseIcon from '@material-ui/icons/Close';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-const drawerWidth = 160;
+const WIDTH = 160;
+
+const ROUTES = [
+	{ id: 1, name: 'Home', path: '/' },
+	{ id: 2, name: 'Gallery', path: '/rides' },
+	{ id: 3, name: 'Add a ride', path: '/add-ride' },
+];
+
 const useStyles = makeStyles((theme) => ({
 	root: {
 		display: 'flex',
 	},
 	drawer: {
 		[theme.breakpoints.up('sm')]: {
-			width: drawerWidth,
+			width: WIDTH,
 			flexShrink: 0,
 		},
 	},
@@ -37,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	toolbar: theme.mixins.toolbar,
 	drawerPaper: {
-		width: drawerWidth,
+		width: WIDTH,
 	},
 	content: {
 		flexGrow: 1,
@@ -49,18 +56,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 function ResponsiveDrawer() {
-	const routeList = [
-		{ id: 1, name: 'Home', path: '/' },
-		{ id: 2, name: 'Gallery', path: '/rides' },
-		{ id: 3, name: 'Add a ride', path: '/add-ride' },
-		{ id: 4, name: 'Sign in', path: '/signin' },
-		{ id: 5, name: 'Profile', path: '/profile' },
-	];
-
 	const classes = useStyles();
 	const theme = useTheme();
+	const history = useHistory();
+
 	const [mobileOpen, setMobileOpen] = React.useState(false);
-	let history = useHistory();
 
 	function handleDrawerToggle() {
 		setMobileOpen(!mobileOpen);
@@ -73,7 +73,7 @@ function ResponsiveDrawer() {
 	const drawer = (
 		<div>
 			<List>
-				{routeList.map((route, id) => (
+				{ROUTES.map((route, id) => (
 					<ListItem button onClick={() => navigateToPath(route)} key={id}>
 						<ListItemText primary={route.name} />
 					</ListItem>

@@ -1,35 +1,15 @@
 import React from 'react';
-import Carousel from 'react-material-ui-carousel';
 
+import Carousel from 'react-material-ui-carousel';
 import { Paper } from '@material-ui/core';
 
 import allos from '../assets/allos.jpeg';
 import bonnette from '../assets/bonnette.jpeg';
 import glandon from '../assets/glandon.jpeg';
 import izoard from '../assets/izoard.jpeg';
-//TODO check require vs import
 require('default-passive-events');
 
-function Project(props) {
-	return (
-		<Paper
-			style={{
-				backgroundImage: `url(${props.item.image})`,
-				backgroundPosition: 'center',
-				backgroundSize: 'cover',
-				height: '70vh',
-				padding: '2rem',
-				color: 'white',
-			}}
-			elevation={2}
-		>
-			<h2>{props.item.name}</h2>
-			<p>{props.item.description}</p>
-		</Paper>
-	);
-}
-
-const items = [
+const ITEMS = [
 	{
 		image: bonnette,
 		name: 'Col de la Bonnette',
@@ -55,16 +35,35 @@ const items = [
 	},
 ];
 
+function Content(props) {
+	return (
+		<Paper
+			style={{
+				backgroundImage: `url(${props.item.image})`,
+				backgroundPosition: 'center',
+				backgroundSize: 'cover',
+				height: '70vh',
+				padding: '2rem',
+				color: 'white',
+			}}
+			elevation={2}
+		>
+			<h2>{props.item.name}</h2>
+			<p>{props.item.description}</p>
+		</Paper>
+	);
+}
+
 const autoPlay = true;
-const timer = 2000;
+const timer = 2100;
 const animation = 'fade';
 
 function NewsCarousel() {
 	return (
 		<div className="news-carousel">
 			<Carousel animation={animation} autoPlay={autoPlay} timer={timer}>
-				{items.map((item, index) => {
-					return <Project item={item} key={index} />;
+				{ITEMS.map((item, index) => {
+					return <Content item={item} key={index} />;
 				})}
 			</Carousel>
 		</div>

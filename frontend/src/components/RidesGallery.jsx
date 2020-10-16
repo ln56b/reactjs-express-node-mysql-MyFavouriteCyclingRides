@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
@@ -96,8 +95,13 @@ function RidesGallery({ rides, getRides }) {
 				</Grid>
 			) : (
 				<div className={classes.empty}>
-					<CircularProgress />
-					<p>Please add a ride </p>
+					<Card>
+						<CardContent>
+							<Typography variant="body1" color="textPrimary" component="p">
+								Please add your first ride
+							</Typography>
+						</CardContent>
+					</Card>
 				</div>
 			)}
 		</div>
