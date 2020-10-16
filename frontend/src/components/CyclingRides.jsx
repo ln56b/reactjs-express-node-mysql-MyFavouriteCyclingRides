@@ -96,7 +96,15 @@ function CyclingRides() {
 
 	const saveRide = (e) => {
 		e.preventDefault();
-		ride.id ? updateRide() : createRide();
+
+		if (ride.name && selectedPicture) {
+			ride.id ? updateRide() : createRide();
+		}
+		setNotify({
+			isOpen: true,
+			message: 'Ride name and ride picture are required',
+			type: 'warning',
+		});
 	};
 
 	const deleteRide = async (ride, id) => {
@@ -135,12 +143,6 @@ function CyclingRides() {
 		setRide({ ...ride, [name]: value });
 	};
 
-	const isValidForm = !ride.id
-		? ride.name && selectedPicture
-			? true
-			: false
-		: true;
-
 	const selectPicture = (e) => {
 		const picture = e.target.files[0];
 		setSelectedPicture(picture);
@@ -164,7 +166,6 @@ function CyclingRides() {
 					saveRide={saveRide}
 					handleInputChange={handleInputChange}
 					selectPicture={selectPicture}
-					isValidForm={isValidForm}
 				/>
 			</Route>
 			<Route path="/rides/:id">
