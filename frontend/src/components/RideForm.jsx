@@ -32,7 +32,13 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function RideForm({ ride, saveRide, handleInputChange, selectPicture }) {
+function RideForm({
+	ride,
+	saveRide,
+	handleInputChange,
+	selectPicture,
+	isValidForm,
+}) {
 	const classes = useStyles();
 
 	return (
@@ -181,6 +187,7 @@ function RideForm({ ride, saveRide, handleInputChange, selectPicture }) {
 						variant="contained"
 						className={classes.submit}
 						color="primary"
+						disabled={!isValidForm}
 					>
 						Send
 					</Button>

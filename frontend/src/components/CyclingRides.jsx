@@ -36,7 +36,7 @@ function CyclingRides() {
 		type: '',
 	});
 
-	let history = useHistory();
+	const history = useHistory();
 	const { getConfirmation } = useConfirmationDialog();
 
 	const getRides = () => {
@@ -142,6 +142,8 @@ function CyclingRides() {
 		setSelectedPicture(picture);
 	};
 
+	const isValidForm = ride.name && selectedPicture ? true : false;
+
 	return (
 		<div className="cycling-rides">
 			<ResponsiveDrawer />
@@ -160,6 +162,7 @@ function CyclingRides() {
 					saveRide={saveRide}
 					handleInputChange={handleInputChange}
 					selectPicture={selectPicture}
+					isValidForm={isValidForm}
 				/>
 			</Route>
 			<Route path="/rides/:id">
