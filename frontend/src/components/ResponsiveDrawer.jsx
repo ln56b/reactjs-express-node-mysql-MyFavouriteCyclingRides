@@ -21,6 +21,7 @@ const ROUTES = [
 	{ id: 1, name: 'Home', path: '/' },
 	{ id: 2, name: 'Gallery', path: '/rides' },
 	{ id: 3, name: 'Add a ride', path: '/add-ride' },
+	{ id: 4, name: 'Sign in', path: '/signin' },
 ];
 
 const useStyles = makeStyles((theme) => ({

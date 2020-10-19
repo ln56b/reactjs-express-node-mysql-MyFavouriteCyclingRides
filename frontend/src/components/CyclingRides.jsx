@@ -9,6 +9,7 @@ import ResponsiveDrawer from './ResponsiveDrawer';
 import RideCard from './RideCard';
 import RideForm from './RideForm';
 import RidesGallery from './RidesGallery';
+import SignIn from './Signin';
 
 function CyclingRides() {
 	const initialRideState = {
@@ -175,6 +176,7 @@ function CyclingRides() {
 					deleteRide={deleteRide}
 				/>
 			</Route>
+			<Route path="/signin" component={SignIn}></Route>
 		</div>
 	);
 }
